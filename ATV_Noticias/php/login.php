@@ -17,7 +17,7 @@
         $email = $_POST['email'];
         $senha = $_POST['senha'];
 
-        $res = mysqli_query($con, "SELECT tipo, email, senha FROM usuario u INNER JOIN login l WHERE u.id = l.id AND email = '$email'");
+        $res = mysqli_query($con, "SELECT tipo, email, senha FROM usuario WHERE email = '$email'");
         $login = mysqli_fetch_array($res);
 
         if(isset($login[1]) == false)
@@ -36,7 +36,7 @@
             }
             else
             {
-                header('Location: ..index.php');
+                header('Location: ../index.php');
             }
         }
         
