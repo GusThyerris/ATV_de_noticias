@@ -20,7 +20,8 @@
         $consenha = $_POST['consenha'];
         $tipo = intval($_POST['tipo']);
 
-        $verif = mysqli_query($con, "SELECT email FROM login WHERE email = '$email'");
+        $verif = mysqli_query($con, "SELECT email FROM usuario WHERE email = '$email'");
+        $verif = mysqli_fetch_array($verif);
 
         if(isset($verif))
         {
@@ -28,15 +29,18 @@
         }
         else if($senha != $consenha)
         {
-            echo "<h2></h2>";
+            echo "<h2>Senhas não coincidem</h2>";
+        }
+        else if(strlen($senha) < 4)
+        {
+            echo "<h2>Senha muito curta</h2>";
         }
         else{
-            $res = mysqli_query($con, "INSERT INTO usuario (nome, tipo) VALUES ('$nome', $tipo)");
+            
+            $res = mysqli_query($con, "INSERT INTO usuario (nome, tipo, email, senha) VALUES ('$nome', $tipo, '$email', $senha)");
 
-            $res2 = mysqli_query($con, "SELECT id FROM usuario where nome = '$nome'");
-            $id = mysqli_fetch_array($res2);
-
-            $res3 = mysqli_query($con, "INSERT INTO login VALUES ('$id[id]', '$email', $senha)");
+            echo "<h2>Cadastro realizado com êxito</h2>";
+            echo "<h2>Aguarde confirmação do admin</h2>";
         }
 
 
